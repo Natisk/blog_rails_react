@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Api::V1::PostsController < ApplicationController
-  before_action :set_post, only: %i[ show update destroy ]
+  before_action :set_post, only: %i[show update destroy]
 
   # GET /api/v1/posts
   def index
-    @posts = Api::V1::Post.all
+    @posts = Post.order(created_at: :desc).limit(20)
 
     render json: @posts
   end
@@ -17,7 +17,7 @@ class Api::V1::PostsController < ApplicationController
 
   # POST /api/v1/posts
   def create
-    @post = Api::V1::Post.new(post_params)
+    @post = Post.new(post_params)
 
     if @post.save
       render json: @post, status: :created, location: @post
@@ -43,7 +43,7 @@ class Api::V1::PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Api::V1::Post.find(params[:id])
+      @post = Post.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
