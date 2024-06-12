@@ -10,12 +10,15 @@ function NewPostForm () {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
-    const postData = { title, body };
+    const post = {
+      title: title,
+      body: body
+    };
 
     const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(postData)
+      body: JSON.stringify({ post: post })
     });
 
     // TODO handle Promise with error message
